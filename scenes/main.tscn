@@ -1,3 +1,18 @@
-[gd_scene format=3 uid="uid://h5oitlharw80"]
+[gd_scene load_steps=4 format=3 uid="uid://h5oitlharw80"]
+
+[ext_resource type="PackedScene" uid="uid://ih0a22xq0bdl" path="res://scenes/Player.tscn" id="1_5qdae"]
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_f3dlu"]
+[ext_resource type="PackedScene" uid="uid://dd7vqx7w32p7v" path="res://scenes/zombie.tscn" id="3_rlky0"]
 
 [node name="Main" type="Node"]
+script = ExtResource("1_f3dlu")
+
+[node name="Player" parent="." instance=ExtResource("1_5qdae")]
+position = Vector2(174, 510)
+move_speed = 500.0
+
+[node name="Zombie" parent="." instance=ExtResource("3_rlky0")]
+position = Vector2(740, 338)
+move_speed = 200.0
+
+[connection signal="player_seen" from="Zombie" to="." method="_on_zombie_player_seen"]

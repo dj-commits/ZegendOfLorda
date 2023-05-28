@@ -1,8 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://ih0a22xq0bdl"]
+[gd_scene load_steps=4 format=3 uid="uid://ih0a22xq0bdl"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_ye5r0"]
+[ext_resource type="Texture2D" uid="uid://dp76c31u00jev" path="res://sprites/zombie_robot.png" id="2_0c62p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m5gao"]
+size = Vector2(33, 58)
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_ye5r0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_0c62p")
+offset = Vector2(0, -32)
+
+[node name="HurtBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0.5, -30)
+shape = SubResource("RectangleShape2D_m5gao")

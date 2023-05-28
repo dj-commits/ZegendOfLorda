@@ -1,0 +1,149 @@
+[gd_scene load_steps=15 format=3 uid="uid://dd7vqx7w32p7v"]
+
+[ext_resource type="Texture2D" uid="uid://uqquh80to844" path="res://sprites/zombie.png" id="1_kjk1g"]
+[ext_resource type="Script" path="res://scripts/zombie.gd" id="1_mbdx2"]
+
+[sub_resource type="Animation" id="Animation_1ui3k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [9]
+}
+
+[sub_resource type="Animation" id="Animation_jps5i"]
+resource_name = "zombie_walk_down"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_8e3p2"]
+resource_name = "zombie_walk_left"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_whsxp"]
+resource_name = "zombie_walk_right"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_4rkx6"]
+resource_name = "zombie_walk_up"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [9, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7thb4"]
+_data = {
+"RESET": SubResource("Animation_1ui3k"),
+"zombie_walk_down": SubResource("Animation_jps5i"),
+"zombie_walk_left": SubResource("Animation_8e3p2"),
+"zombie_walk_right": SubResource("Animation_whsxp"),
+"zombie_walk_up": SubResource("Animation_4rkx6")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h7lit"]
+animation = &"zombie_walk_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gr81o"]
+animation = &"zombie_walk_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vvb3m"]
+animation = &"zombie_walk_up"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wi5ys"]
+animation = &"zombie_walk_left"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_eau3l"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_h7lit")
+blend_point_0/pos = Vector2(0, 0.9)
+blend_point_1/node = SubResource("AnimationNodeAnimation_gr81o")
+blend_point_1/pos = Vector2(0.9, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_vvb3m")
+blend_point_2/pos = Vector2(0, -0.9)
+blend_point_3/node = SubResource("AnimationNodeAnimation_wi5ys")
+blend_point_3/pos = Vector2(-0.9, 0)
+blend_mode = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dfcm8"]
+radius = 217.021
+
+[node name="Zombie" type="Node2D"]
+script = ExtResource("1_mbdx2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, 0)
+texture = ExtResource("1_kjk1g")
+hframes = 3
+vframes = 4
+frame = 9
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7thb4")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="AnimationPlayer"]
+tree_root = SubResource("AnimationNodeBlendSpace2D_eau3l")
+anim_player = NodePath("..")
+active = true
+parameters/blend_position = Vector2(-0.00139666, -0.00436676)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_dfcm8")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

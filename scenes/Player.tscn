@@ -1,20 +1,143 @@
-[gd_scene load_steps=4 format=3 uid="uid://ih0a22xq0bdl"]
+[gd_scene load_steps=15 format=3 uid="uid://ih0a22xq0bdl"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_ye5r0"]
-[ext_resource type="Texture2D" uid="uid://dp76c31u00jev" path="res://sprites/zombie_robot.png" id="2_0c62p"]
+[ext_resource type="Texture2D" uid="uid://pwts6aedjopl" path="res://sprites/cutehulu_ss.png" id="2_ys0t8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m5gao"]
-size = Vector2(33, 58)
+size = Vector2(56, 88)
+
+[sub_resource type="Animation" id="Animation_5wt6m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_3tw6p"]
+resource_name = "walk_down"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_wkn6o"]
+resource_name = "walk_left"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_nsjik"]
+resource_name = "walk_right"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="Animation" id="Animation_ehfu3"]
+resource_name = "walk_up"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lhtnr"]
+_data = {
+"RESET": SubResource("Animation_5wt6m"),
+"walk_down": SubResource("Animation_3tw6p"),
+"walk_left": SubResource("Animation_wkn6o"),
+"walk_right": SubResource("Animation_nsjik"),
+"walk_up": SubResource("Animation_ehfu3")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tltyf"]
+animation = &"walk_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jryjt"]
+animation = &"walk_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0ft7v"]
+animation = &"walk_up"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ekico"]
+animation = &"walk_left"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_36txy"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_tltyf")
+blend_point_0/pos = Vector2(0, 1)
+blend_point_1/node = SubResource("AnimationNodeAnimation_jryjt")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_0ft7v")
+blend_point_2/pos = Vector2(0, -0.9)
+blend_point_3/node = SubResource("AnimationNodeAnimation_ekico")
+blend_point_3/pos = Vector2(-1, 0)
+blend_mode = 1
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_ye5r0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_0c62p")
-offset = Vector2(0, -32)
+texture = ExtResource("2_ys0t8")
+hframes = 2
+vframes = 2
 
 [node name="HurtBox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(0.5, -30)
 shape = SubResource("RectangleShape2D_m5gao")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
+position_smoothing_enabled = true
+position_smoothing_speed = 12.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_lhtnr")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="AnimationPlayer"]
+tree_root = SubResource("AnimationNodeBlendSpace2D_36txy")
+anim_player = NodePath("..")
+active = true
+parameters/blend_position = Vector2(-0.198324, 0.0655022)

@@ -1,11 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://h5oitlharw80"]
+[gd_scene load_steps=6 format=3 uid="uid://d0n735p4uoytj"]
 
 [ext_resource type="PackedScene" uid="uid://ih0a22xq0bdl" path="res://scenes/Player.tscn" id="1_5qdae"]
-[ext_resource type="Script" path="res://scenes/main.gd" id="1_f3dlu"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_y17yd"]
 [ext_resource type="PackedScene" uid="uid://dd7vqx7w32p7v" path="res://scenes/zombie.tscn" id="3_rlky0"]
+[ext_resource type="PackedScene" uid="uid://6vm7ojrn1sqd" path="res://scenes/slime.tscn" id="4_obi0s"]
+[ext_resource type="PackedScene" uid="uid://balbw7ui1isc1" path="res://scenes/player_ui.tscn" id="5_jwm7e"]
 
 [node name="Main" type="Node"]
-script = ExtResource("1_f3dlu")
+script = ExtResource("1_y17yd")
 
 [node name="Player" parent="." instance=ExtResource("1_5qdae")]
 position = Vector2(174, 510)
@@ -13,6 +15,16 @@ move_speed = 500.0
 
 [node name="Zombie" parent="." instance=ExtResource("3_rlky0")]
 position = Vector2(740, 338)
-move_speed = 200.0
+
+[node name="Slime" parent="." instance=ExtResource("4_obi0s")]
+position = Vector2(691, 360)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+editor_description = "Base canvas layer for GUI
+"
+
+[node name="PlayerUI" parent="CanvasLayer" instance=ExtResource("5_jwm7e")]
+offset_right = 106.0
+offset_bottom = 73.0
 
 [connection signal="player_seen" from="Zombie" to="." method="_on_zombie_player_seen"]

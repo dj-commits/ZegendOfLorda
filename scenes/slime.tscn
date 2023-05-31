@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://6vm7ojrn1sqd"]
+
+[ext_resource type="Texture2D" uid="uid://c3a5ye0etx4ao" path="res://sprites/32x32_slime.png" id="1_4bvdj"]
+
+[node name="Slime" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_4bvdj")

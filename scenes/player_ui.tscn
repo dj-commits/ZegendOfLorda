@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=3 uid="uid://balbw7ui1isc1"]
+
+[ext_resource type="Texture2D" uid="uid://cmfjktitlsj2" path="res://sprites/16x16_heartUI.png" id="1_lwbwr"]
+[ext_resource type="Script" path="res://scenes/player_ui.gd" id="1_qjw3r"]
+
+[node name="PlayerUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 516.0
+offset_bottom = 157.0
+script = ExtResource("1_qjw3r")
+
+[node name="Hearts" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 61.0
+offset_right = 339.0
+offset_bottom = 40.0
+
+[node name="HeartSpot1" type="TextureRect" parent="Hearts"]
+layout_mode = 2
+offset_left = 12.0
+offset_right = 52.0
+offset_bottom = 40.0
+texture = ExtResource("1_lwbwr")
+
+[node name="HeartSpot2" type="TextureRect" parent="Hearts"]
+offset_left = 68.0
+offset_right = 108.0
+offset_bottom = 40.0
+texture = ExtResource("1_lwbwr")
+
+[node name="HeartSpot3" type="TextureRect" parent="Hearts"]
+offset_left = 123.0
+offset_right = 163.0
+offset_bottom = 40.0
+texture = ExtResource("1_lwbwr")
+
+[node name="HealthLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 41.0
+offset_bottom = 23.0
+text = "Health:
+"
+
+[node name="ManaLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 52.0
+offset_right = 52.0
+offset_bottom = 78.0
+text = "Mana:"

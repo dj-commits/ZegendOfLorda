@@ -117,10 +117,11 @@ blend_point_3/pos = Vector2(-0.9, 0)
 blend_mode = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dfcm8"]
-radius = 217.021
+radius = 408.176
 
 [node name="Zombie" type="Node2D"]
 script = ExtResource("1_mbdx2")
+move_speed = 200.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1, 0)
@@ -140,10 +141,15 @@ anim_player = NodePath("..")
 active = true
 parameters/blend_position = Vector2(-0.00139666, -0.00436676)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="DetectionZone" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="DetectionShape" type="CollisionShape2D" parent="DetectionZone"]
 shape = SubResource("CircleShape2D_dfcm8")
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
-[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
+[node name="WalkTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="walk_dest_reached" from="." to="." method="_on_walk_dest_reached"]
+[connection signal="area_entered" from="DetectionZone" to="." method="_on_detection_zone_area_entered"]
+[connection signal="area_exited" from="DetectionZone" to="." method="_on_detection_zone__area_exited"]

@@ -38,10 +38,8 @@ func _process(delta):
 				print_debug(walk_timer.time_left);
 		ZombieState.Walking:
 			print_debug("Zombie Walking");
-			position = global_position.move_toward(walk_destination, move_speed * delta).normalized();
+			movement = (walk_destination - global_position).normalized();
 			check_distance_to_walk_destination();
-			print_debug(position);
-			print_debug(walk_destination);
 		ZombieState.Possessed:
 			print_debug("Zombie Possessed");
 		ZombieState.Chasing:
@@ -53,7 +51,7 @@ func _process(delta):
 			print_debug("Zombie Dying");
 		
 	
-	#position += movement * move_speed * delta;
+	position += movement * move_speed * delta;
 	$AnimationPlayer/AnimationTree["parameters/blend_position"] = movement;
 		
 

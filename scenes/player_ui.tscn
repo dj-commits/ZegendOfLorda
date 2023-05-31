@@ -24,12 +24,14 @@ offset_bottom = 40.0
 texture = ExtResource("1_lwbwr")
 
 [node name="HeartSpot2" type="TextureRect" parent="Hearts"]
+layout_mode = 0
 offset_left = 68.0
 offset_right = 108.0
 offset_bottom = 40.0
 texture = ExtResource("1_lwbwr")
 
 [node name="HeartSpot3" type="TextureRect" parent="Hearts"]
+layout_mode = 0
 offset_left = 123.0
 offset_right = 163.0
 offset_bottom = 40.0
